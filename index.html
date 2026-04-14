@@ -61,6 +61,37 @@ input {
   border-radius: 5px;
   cursor: pointer;
 }
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 8px;
+}
+
+.btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.plus {
+  background: #00cc66;
+}
+
+.minus {
+  background: #cc4444;
+}
+
+input {
+  width: 50px;
+  text-align: center;
+}
 </style>
 </head>
 
@@ -114,6 +145,18 @@ const items = [
 
 ];
 
+function cambiar(index, cantidad) {
+  let input = document.getElementById(`item-${index}`);
+
+  let valor = parseInt(input.value) || 0;
+  valor += cantidad;
+
+  if (valor < 0) valor = 0;
+
+  input.value = valor;
+  calcular();
+}
+  
 function render() {
   const menu = document.getElementById("menu");
   menu.innerHTML = "";
@@ -124,7 +167,18 @@ function render() {
         <img src="${item.img}">
         <h3>${item.nombre}</h3>
         <p>$${item.precio}</p>
-        <input type="number" min="0" value="0" onchange="calcular()" id="item-${index}">
+
+        <div class="controls">
+          <button class="btn minus" onclick="cambiar(${index}, -1)">-</button>
+
+          <input type="number" min="0" value="0"
+            id="item-${index}"
+            onchange="calcular()"
+            oninput="calcular()">
+
+          <button class="btn plus" onclick="cambiar(${index}, 1)">+</button>
+        </div>
+
       </div>
     `;
   });
