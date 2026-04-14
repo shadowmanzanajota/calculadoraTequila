@@ -25,6 +25,7 @@ h2 {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  gap: 10px;
 }
 
 .item {
@@ -108,45 +109,7 @@ input {
 <button class="reset" onclick="resetear()">Reiniciar</button>
 
 <script>
-const items = [
 
-  // Bebidas
-  {nombre: "Agua", precio: 550, img: "agua.png"},
-  {nombre: "Jugo de frutas", precio: 600, img: "zumito.png"},
-  {nombre: "Limonada", precio: 600, img: "limonada.png"},
-  {nombre: "Ice Tea", precio: 600, img: "icetea.png"},
-  {nombre: "Energy", precio: 650, img: "energety.png"},
-
-  // Comida
-  {nombre: "Nachos con guacamole", precio: 750, img: "nachos.png"},
-  {nombre: "Quesadilla", precio: 800, img: "burrito.png"},
-  {nombre: "Burrito", precio: 900, img: "burrito.png"},
-
-  // Cócteles
-  {nombre: "Mojito", precio: 700, img: "mojito.png"},
-  {nombre: "Cubalibre", precio: 750, img: "cubalibre.png"},
-  {nombre: "Margarita", precio: 800, img: "margarita.png"},
-  {nombre: "Ron con frutas", precio: 800, img: "ronconfrutas.png"},
-  {nombre: "Vodka con frutas", precio: 800, img: "vodkaconfrutas.png"},
-  {nombre: "Whiskey con cola", precio: 800, img: "whiskyconcola.png"},
-  {nombre: "Tequila Sunrise", precio: 800, img: "tequilasunrise.png"},
-  {nombre: "Vodka con energydrink", precio: 800, img: "vodkaenergety.png"},
-
-  // Alcohol
-  {nombre: "Cerveza", precio: 700, img: "cerveza.png"},
-  {nombre: "Tequila", precio: 900, img: "tequila.png"},
-  {nombre: "Ron", precio: 900, img: "ron.png"},
-  {nombre: "Vodka", precio: 900, img: "vodka.png"},
-  {nombre: "Whiskey", precio: 900, img: "whisky.png"},
-  {nombre: "Jagger", precio: 800, img: "jagger.png"},
-
-  // Especiales
-  {nombre: "Torito", precio: 1000, img: "torito.png"},
-  {nombre: "JaggBomb", precio: 1000, img: "jaggerbomb.png"},
-  {nombre: "Golem", precio: 1100, img: "golem.png"},
-  {nombre: "Licor afrodisiaco", precio: 900, img: "licorafrodisiaco.png"}
-
-];
 
 function cambiar(index, cantidad) {
   let input = document.getElementById(`item-${index}`);
@@ -164,7 +127,41 @@ function render() {
   const menu = document.getElementById("menu");
   menu.innerHTML = "";
 
-  items.forEach((item, index) => {
+  const ordenados = [
+    {nombre: "Cerveza", precio: 700, img: "cerveza.png"},
+    {nombre: "Burrito", precio: 900, img: "burrito.png"},
+    {nombre: "Energy", precio: 650, img: "energety.png"},
+    {nombre: "Golem", precio: 1100, img: "golem.png"},
+    {nombre: "Ice Tea", precio: 600, img: "icetea.png"},
+
+    {nombre: "JaggBomb", precio: 1000, img: "jaggerbomb.png"},
+    {nombre: "Jagger", precio: 800, img: "jagger.png"},
+    {nombre: "Jugo de frutas", precio: 600, img: "zumito.png"},
+    {nombre: "Limonada", precio: 600, img: "limonada.png"},
+    {nombre: "Licor afrodisiaco", precio: 900, img: "licorafrodisiaco.png"},
+
+    {nombre: "Mojito", precio: 700, img: "mojito.png"},
+    {nombre: "Nachos con guacamole", precio: 750, img: "nachos.png"},
+    {nombre: "Quesadilla", precio: 800, img: "burrito.png"},
+    {nombre: "Ron", precio: 900, img: "ron.png"},
+    {nombre: "Cubalibre", precio: 750, img: "cubalibre.png"},
+
+    {nombre: "Ron con frutas", precio: 800, img: "ronconfrutas.png"},
+    {nombre: "Margarita", precio: 800, img: "margarita.png"},
+    {nombre: "Tequila", precio: 900, img: "tequila.png"},
+    {nombre: "Tequila Sunrise", precio: 800, img: "tequilasunrise.png"},
+    {nombre: "Torito", precio: 1000, img: "torito.png"},
+
+    {nombre: "Vodka", precio: 900, img: "vodka.png"},
+    {nombre: "Vodka con energydrink", precio: 800, img: "vodkaenergety.png"},
+    {nombre: "Vodka con frutas", precio: 800, img: "vodkaconfrutas.png"},
+    {nombre: "Agua", precio: 550, img: "agua.png"},
+    {nombre: "Whiskey", precio: 900, img: "whisky.png"},
+
+    {nombre: "Whiskey con cola", precio: 800, img: "whiskyconcola.png"}
+  ];
+
+  ordenados.forEach((item, index) => {
     menu.innerHTML += `
       <div class="item">
         <img src="${item.img}">
@@ -181,10 +178,11 @@ function render() {
 
           <button class="btn plus" onclick="cambiar(${index}, 1)">+</button>
         </div>
-
       </div>
     `;
   });
+
+  window.items = ordenados; // importante para que calcular funcione
 }
 
 function calcular() {
