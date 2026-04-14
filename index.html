@@ -1,74 +1,132 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Calculadora Tequi-la-la</title>
-  <style>
-    body {
-      font-family: Arial;
-      background: #1e1e2f;
-      color: white;
-      text-align: center;
-      padding: 20px;
-    }
-    h1 {
-      color: #00ffcc;
-    }
-    input, select {
-      padding: 8px;
-      margin: 5px;
-      border-radius: 5px;
-      border: none;
-    }
-    button {
-      padding: 10px 20px;
-      background: #00ffcc;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .resultado {
-      margin-top: 20px;
-      font-size: 20px;
-      color: #00ffcc;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Tequi-la-la Menu</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #1e1e2f;
+  color: white;
+  text-align: center;
+}
+
+h1 {
+  color: #00ffcc;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.item {
+  background: #2a2a40;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+  width: 150px;
+}
+
+.item img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+button {
+  margin: 5px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add { background: #00cc66; }
+.remove { background: #cc4444; }
+
+.total {
+  font-size: 24px;
+  margin-top: 20px;
+  color: #00ffcc;
+}
+
+.reset {
+  background: orange;
+  padding: 10px 20px;
+  margin-top: 10px;
+}
+</style>
 </head>
+
 <body>
 
-<h1>🍹 Calculadora Tequi-la-la</h1>
+<h1>🍹 Tequi-la-la</h1>
 
-<p>Coste del producto:</p>
-<input type="number" id="coste" placeholder="Ej: 400">
+<div class="container" id="menu"></div>
 
-<p>Margen de ganancia (%):</p>
-<input type="number" id="margen" placeholder="Ej: 50">
-
-<p>Precio mínimo: 550 | Máximo: 1100</p>
-
-<button onclick="calcular()">Calcular Precio</button>
-
-<div class="resultado" id="resultado"></div>
+<div class="total" id="total">Total: $0</div>
+<button class="reset" onclick="resetear()">Reiniciar</button>
 
 <script>
-function calcular() {
-  let coste = parseFloat(document.getElementById("coste").value);
-  let margen = parseFloat(document.getElementById("margen").value);
+const items = [
+  {nombre: "Agua", precio: 550, img: "https://via.placeholder.com/100"},
+  {nombre: "Cerveza", precio: 800, img: "https://via.placeholder.com/100"},
+  {nombre: "Mojito", precio: 900, img: "https://via.placeholder.com/100"},
+  {nombre: "Tequila", precio: 950, img: "https://via.placeholder.com/100"},
+  {nombre: "Whiskey", precio: 1000, img: "https://via.placeholder.com/100"},
+  {nombre: "JaggBomb", precio: 1100, img: "https://via.placeholder.com/100"},
+  {nombre: "Burrito", precio: 1000, img: "https://via.placeholder.com/100"},
+  {nombre: "Nachos", precio: 800, img: "https://via.placeholder.com/100"}
+];
 
-  if (isNaN(coste) || isNaN(margen)) {
-    document.getElementById("resultado").innerText = "❌ Introduce valores válidos";
-    return;
-  }
+let carrito = {};
 
-  let precio = coste + (coste * margen / 100);
+function render() {
+  const menu = document.getElementById("menu");
+  menu.innerHTML = "";
 
-  // límites
-  if (precio < 550) precio = 550;
-  if (precio > 1100) precio = 1100;
+  items.forEach((item, index) => {
+    if (!carrito[index]) carrito[index] = 0;
 
-  document.getElementById("resultado").innerText =
-    "💰 Precio recomendado: $" + Math.round(precio);
+    menu.innerHTML += `
+      <div class="item">
+        <img src="${item.img}">
+        <h3>${item.nombre}</h3>
+        <p>$${item.precio}</p>
+        <button class="remove" onclick="cambiar(${index}, -1)">-</button>
+        ${carrito[index]}
+        <button class="add" onclick="cambiar(${index}, 1)">+</button>
+      </div>
+    `;
+  });
+
+  calcularTotal();
 }
+
+function cambiar(index, cantidad) {
+  carrito[index] += cantidad;
+  if (carrito[index] < 0) carrito[index] = 0;
+  render();
+}
+
+function calcularTotal() {
+  let total = 0;
+  items.forEach((item, index) => {
+    total += item.precio * carrito[index];
+  });
+
+  document.getElementById("total").innerText = "Total: $" + total;
+}
+
+function resetear() {
+  carrito = {};
+  render();
+}
+
+render();
 </script>
 
 </body>
