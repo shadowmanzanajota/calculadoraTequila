@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora Tequi-la-la</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #1e1e2f;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+      color: #00ffcc;
+    }
+    input, select {
+      padding: 8px;
+      margin: 5px;
+      border-radius: 5px;
+      border: none;
+    }
+    button {
+      padding: 10px 20px;
+      background: #00ffcc;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .resultado {
+      margin-top: 20px;
+      font-size: 20px;
+      color: #00ffcc;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🍹 Calculadora Tequi-la-la</h1>
+
+<p>Coste del producto:</p>
+<input type="number" id="coste" placeholder="Ej: 400">
+
+<p>Margen de ganancia (%):</p>
+<input type="number" id="margen" placeholder="Ej: 50">
+
+<p>Precio mínimo: 550 | Máximo: 1100</p>
+
+<button onclick="calcular()">Calcular Precio</button>
+
+<div class="resultado" id="resultado"></div>
+
+<script>
+function calcular() {
+  let coste = parseFloat(document.getElementById("coste").value);
+  let margen = parseFloat(document.getElementById("margen").value);
+
+  if (isNaN(coste) || isNaN(margen)) {
+    document.getElementById("resultado").innerText = "❌ Introduce valores válidos";
+    return;
+  }
+
+  let precio = coste + (coste * margen / 100);
+
+  // límites
+  if (precio < 550) precio = 550;
+  if (precio > 1100) precio = 1100;
+
+  document.getElementById("resultado").innerText =
+    "💰 Precio recomendado: $" + Math.round(precio);
+}
+</script>
+
+</body>
+</html>
