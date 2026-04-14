@@ -101,7 +101,10 @@ input {
 
 <div class="container" id="menu"></div>
 
-<div class="total" id="total">Total: $0</div>
+<div class="total">
+  <div id="total">Total: $0</div>
+  <div id="totalAmigo" style="color:#ffcc00;">Total amigo (-25%): $0</div>
+</div>
 <button class="reset" onclick="resetear()">Reiniciar</button>
 
 <script>
@@ -192,7 +195,10 @@ function calcular() {
     total += cantidad * item.precio;
   });
 
+  let totalAmigo = total * 0.75; // 25% descuento
+
   document.getElementById("total").innerText = "Total: $" + total;
+  document.getElementById("totalAmigo").innerText = "Total amigo (-25%): $" + Math.round(totalAmigo);
 }
 
 function resetear() {
